@@ -1,0 +1,157 @@
+// schema.prisma
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+/// Utilisateur principal (lié à Next Auth)
+
+model User {
+  id       BigInt  @id @default(autoincrement()) @unique
+  name     String  @db.VarChar(50)
+  email    String  @db.VarChar(50)
+  password String? @db.VarChar(256) // hash du mot de passe
+  vendeur  Boolean @default(false)
+
+  // Relations
+  articles       Articles[]
+  comments       Comments[]  @relation("UserComments")
+  sentMsgs       Messagers[] @relation("SentMessages")
+  recvMsgs       Messagers[] @relation("ReceivedMessages")
+  numbers        Numbers[]
+  ordersAsBuyer  Orders[]    @relation("BuyerOrders")
+  ordersAsSeller Orders[]    @relation("SellerOrders")
+  cards          Cards[]
+
+  emailVerified Boolean
+  image         String?
+  createdAt     DateTime
+  updatedAt     DateTime
+  sessions      Session[]
+  accounts      Account[]
+
+  @@map("user")
+}
+
+model Articles {
+  id          BigInt   @id @default(autoincrement())
+  userId      BigInt
+  name        String   @db.VarChar(50)
+  images      String   @db.VarChar(255)
+  description String   @db.VarChar(200)
+  price       BigInt
+  stocke      BigInt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user     User       @relation(fields: [userId], references: [id])
+  comments Comments[]
+}
+
+model Comments {
+  id        BigInt   @id @default(autoincrement())
+  comments  String   @db.VarChar(200)
+  articleId BigInt
+  buyerId   BigInt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  article Articles @relation(fields: [articleId], references: [id])
+  buyer   User     @relation("UserComments", fields: [buyerId], references: [id])
+}
+
+model Messagers {
+  id         BigInt    @id @default(autoincrement())
+  message    String    @db.VarChar(512)
+  senderId   BigInt
+  receiverId BigInt
+  sendedAt   DateTime  @default(now())
+  readAt     DateTime?
+  updatedAt  DateTime?
+
+  sender   User @relation("SentMessages", fields: [senderId], references: [id])
+  receiver User @relation("ReceivedMessages", fields: [receiverId], references: [id])
+}
+
+model Numbers {
+  id       BigInt
+  number   BigInt @unique
+  sellerId BigInt
+
+  seller User @relation(fields: [sellerId], references: [id])
+
+  @@id([id])
+}
+
+model Orders {
+  id             BigInt   @id @default(autoincrement())
+  articleDetails Json
+  buyerId        BigInt
+  sellerId       BigInt
+  orderTime      String?  @db.VarChar(255)
+  orderStatus    String   @default("init") @db.VarChar(255)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  buyer  User @relation("BuyerOrders", fields: [buyerId], references: [id])
+  seller User @relation("SellerOrders", fields: [sellerId], references: [id])
+}
+
+model Cards {
+  id          BigInt @id @default(autoincrement())
+  cardDetails Json
+  userId      BigInt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    BigInt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                BigInt
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
+}
