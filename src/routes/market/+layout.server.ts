@@ -1,6 +1,6 @@
 import type { ServerLoad } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
-import { auth } from '$lib/auth.js';
+import { auth } from '$lib/server/auth.js';
 
 export const load: ServerLoad = async ({ request }) => {
   const session = await auth.api.getSession({ headers: request.headers });

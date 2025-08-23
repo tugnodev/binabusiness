@@ -8,11 +8,11 @@
         <h1 class="text-2xl font-Raleway font-extrabold" ><span class="text-primary">Bina</span><span class="text-secondary">Business</span></h1>
     </div>
     <nav class="hidden xl:flex">
-        <ul class="flex ">
-            <li><a href="/market">Acceil</a></li>
-            <li><a href="/market/arrivages">Arrivages</a></li>
-            <li><a href="/market/commandes">Commandes</a></li>
-            <li><a href="/market/settings">Parametres</a></li>
+        <ul class="flex gap-2">
+            <li><a class="btn btn-secondary" href="/market">Acceil</a></li>
+            <li><a class="btn btn-secondary" href="/market/arrivages">Arrivages</a></li>
+            <li><a class="btn btn-secondary" href="/market/commandes">Commandes</a></li>
+            <li><a class="btn btn-secondary" href="/market/settings">Parametres</a></li>
         </ul>
     </nav>
     <div class="flex btn btn-ghost">

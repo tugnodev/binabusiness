@@ -5,6 +5,11 @@
     function toggle() {
         isOpen = !isOpen
     }
+
+    let redirect = (url: string) => {
+        window.location.href = url
+        isOpen = false
+    }
 </script>
 
 <button aria-label="Burger" class="{isOpen ? 'hidden' : 'block'} z-30 btn btn-primary" onclick={toggle}>
@@ -20,10 +25,10 @@
 {#if isOpen}
     <div in:fly={{ x: -500 }} out:fly={{ x: -500 }} class="fixed z-20 top-0 p-4 left-0 flex flex-col justify-center items-center w-full h-full bg-base-100">
         <ul class="flex flex-col text-center font-Raleway font-bold text-xl text-secondary w-full">
-            <li class="p-2 w-full border-b border-secondary border-t "><a class="w-full" href="/admin">Tableau de bord</a></li>
-            <li class="p-2 w-full border-b border-secondary"><a class="w-full" href="/admin/articles">Articles</a></li>
-            <li class="p-2 w-full border-b border-secondary"><a class="w-full" href="/admin/commandes">Commandes</a></li>
-            <li class="p-2 w-full border-b border-secondary"><a class="w-full" href="/admin/settings">Parametres</a></li>
+            <li class="p-2 w-full border-b border-secondary border-t "><button class="w-full" onclick={() => redirect('/admin')}>Tableau de bord</button></li>
+            <li class="p-2 w-full border-b border-secondary"><button class="w-full" onclick={() => redirect('/admin/articles')}>Articles</button></li>
+            <li class="p-2 w-full border-b border-secondary"><button class="w-full" onclick={() => redirect('/admin/commandes')}>Commandes</button></li>
+            <li class="p-2 w-full border-b border-secondary"><button class="w-full" onclick={() => redirect('/admin/settings')}>Parametres</button></li>
         </ul>
     </div>
 {/if}

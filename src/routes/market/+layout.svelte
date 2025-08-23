@@ -1,9 +1,11 @@
 <script lang="ts">
 	import '../../app.css';
-	import Header from '$lib/components/header.svelte';
+	import Header from '$lib/client/components/header.svelte';
 
 	let { children } = $props();
 </script>
 
 <Header />
-{@render children()}
+<div class="w-full h-full fixed z-10 bg-base-200/60">
+	{@render children()}
+</div>

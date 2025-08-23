@@ -1,25 +1,24 @@
-// schema.prisma
-
-datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
-}
 
 generator client {
   provider = "prisma-client-js"
 }
 
-/// Utilisateur principal (lié à Next Auth)
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
 
 model User {
-  id       BigInt  @id @default(autoincrement()) @unique
-  name     String  @db.VarChar(50)
-  email    String  @db.VarChar(50)
-  password String? @db.VarChar(256) // hash du mot de passe
-  vendeur  Boolean @default(false)
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean
+  password      String?
+  image         String?
+  vender        Boolean @default(false)
+  createdAt     DateTime
+  updatedAt     DateTime
 
-  // Relations
   articles       Articles[]
   comments       Comments[]  @relation("UserComments")
   sentMsgs       Messagers[] @relation("SentMessages")
@@ -27,26 +26,23 @@ model User {
   numbers        Numbers[]
   ordersAsBuyer  Orders[]    @relation("BuyerOrders")
   ordersAsSeller Orders[]    @relation("SellerOrders")
-  cards          Cards[]
 
-  emailVerified Boolean
-  image         String?
-  createdAt     DateTime
-  updatedAt     DateTime
+  cards         Cards[]
   sessions      Session[]
   accounts      Account[]
-
+  
+  @@unique([email])
   @@map("user")
 }
 
 model Articles {
-  id          BigInt   @id @default(autoincrement())
-  userId      BigInt
-  name        String   @db.VarChar(50)
-  images      String   @db.VarChar(255)
-  description String   @db.VarChar(200)
-  price       BigInt
-  stocke      BigInt
+  id          Int      @id @default(autoincrement())
+  userId      String
+  name        String
+  images      String
+  description String
+  price       Int
+  stocke      Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -55,10 +51,10 @@ model Articles {
 }
 
 model Comments {
-  id        BigInt   @id @default(autoincrement())
-  comments  String   @db.VarChar(200)
-  articleId BigInt
-  buyerId   BigInt
+  id        Int      @id @default(autoincrement())
+  comments  String
+  articleId Int
+  buyerId   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -67,10 +63,10 @@ model Comments {
 }
 
 model Messagers {
-  id         BigInt    @id @default(autoincrement())
-  message    String    @db.VarChar(512)
-  senderId   BigInt
-  receiverId BigInt
+  id         Int       @id @default(autoincrement())
+  message    String
+  senderId   String
+  receiverId String
   sendedAt   DateTime  @default(now())
   readAt     DateTime?
   updatedAt  DateTime?
@@ -80,9 +76,9 @@ model Messagers {
 }
 
 model Numbers {
-  id       BigInt
-  number   BigInt @unique
-  sellerId BigInt
+  id       Int
+  number   Int    @unique
+  sellerId String
 
   seller User @relation(fields: [sellerId], references: [id])
 
@@ -90,12 +86,12 @@ model Numbers {
 }
 
 model Orders {
-  id             BigInt   @id @default(autoincrement())
+  id             Int      @id @default(autoincrement())
   articleDetails Json
-  buyerId        BigInt
-  sellerId       BigInt
-  orderTime      String?  @db.VarChar(255)
-  orderStatus    String   @default("init") @db.VarChar(255)
+  buyerId        String
+  sellerId       String
+  orderTime      String?
+  orderStatus    String   @default("init")
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
@@ -104,9 +100,9 @@ model Orders {
 }
 
 model Cards {
-  id          BigInt @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   cardDetails Json
-  userId      BigInt
+  userId      String
 
   user User @relation(fields: [userId], references: [id])
 }
@@ -119,7 +115,7 @@ model Session {
   updatedAt DateTime
   ipAddress String?
   userAgent String?
-  userId    BigInt
+  userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([token])
@@ -130,7 +126,7 @@ model Account {
   id                    String    @id
   accountId             String
   providerId            String
-  userId                BigInt
+  userId                String
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   accessToken           String?
   refreshToken          String?

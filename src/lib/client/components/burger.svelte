@@ -5,9 +5,13 @@
     function toggle() {
         isOpen = !isOpen
     }
+    let redirect = (url: string) => {
+        window.location.href = url
+        isOpen = false
+    }
 </script>
 
-<button aria-label="Burger" class="{isOpen ? 'hidden' : 'block'} z-30 btn btn-primary" onclick={toggle}>
+<button aria-label="Burger" class="{isOpen ? 'hidden' : 'block'} z-30 btn btn-primary sm:hidden" onclick={toggle}>
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
     </svg>
@@ -20,10 +24,10 @@
 {#if isOpen}
     <div in:fly={{ x: -500 }} out:fly={{ x: -500 }} class="fixed z-20 top-0 p-4 left-0 flex flex-col justify-center items-center w-full h-full bg-base-200">
         <ul class="flex flex-col text-center font-Raleway font-bold text-xl text-secondary w-full">
-            <li class="p-2 w-full border-b border-secondary border-t "><a class="w-full" href="/market">Acceil</a></li>
-            <li class="p-2 w-full border-b border-secondary"><a class="w-full" href="/market/arrivages">Arrivages</a></li>
-            <li class="p-2 w-full border-b border-secondary"><a class="w-full" href="/market/commandes">Commandes</a></li>
-            <li class="p-2 w-full border-b border-secondary"><a class="w-full" href="/market/settings">Parametres</a></li>
+            <li class="p-2 w-full border-b border-secondary border-t "><button class="w-full" onclick={() => redirect('/market')}>Acceil</button></li>
+            <li class="p-2 w-full border-b border-secondary"><button class="w-full" onclick={() => redirect('/market/arrivages')}>Arrivages</button></li>
+            <li class="p-2 w-full border-b border-secondary"><button class="w-full" onclick={() => redirect('/market/commandes')}>Commandes</button></li>
+            <li class="p-2 w-full border-b border-secondary"><button class="w-full" onclick={() => redirect('/market/settings')}>Parametres</button></li>
         </ul>
     </div>
 {/if}

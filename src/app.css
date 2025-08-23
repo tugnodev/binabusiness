@@ -8,6 +8,7 @@
     font-style: normal;
     font-display: swap;
   }
+  
 
 @plugin "daisyui/theme" {
     name: "binalight";

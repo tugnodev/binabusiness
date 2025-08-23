@@ -1,2 +1,18 @@
-<script>import "../app.css";</script>
-<slot></slot>
+<script lang="ts">
+import "../app.css";
+
+const { children } = $props();
+
+</script>
+
+
+<div class="w-full h-screen flex flex-col items-center justify-center blur-sm fixed z-0">
+</div>
+{@render children()}
+
+<style>
+    div {
+        background: url("/background.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+</style>

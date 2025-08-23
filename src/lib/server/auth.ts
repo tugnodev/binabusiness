@@ -1,19 +1,19 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import dotenv from "dotenv";
 import {GOOGLE_ID, GOOGLE_SECRET} from "$env/static/private";
 import { PrismaClient } from "@prisma/client";
  
 
-dotenv.config();
 const prisma = new PrismaClient();
 export const auth = betterAuth({
+    appName: "Binabusiness",
     database: prismaAdapter(
         prisma, 
-        { provider: "postgresql" }),
+        { provider: "sqlite" }),
     socialProviders: {
         google: {
             prompt: "select_account",
+            accessType: "offline",
             clientId: GOOGLE_ID,
             clientSecret: GOOGLE_SECRET,
         },
