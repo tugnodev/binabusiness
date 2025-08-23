@@ -1,5 +1,6 @@
 <script lang="ts">
     import { authClient } from "$lib/client/auth.client.js";
+    import { fly, slide } from "svelte/transition";
 
     let same = $state(false);
     let name = $state('');
@@ -14,7 +15,7 @@
 
 </script>
 
-<div class="flex flex-col items-center justify-center w-96 bg-base-200/60 p-6">
+<div in:slide={{ delay: 100 }} out:slide={{ delay: 100 }} class="flex flex-col items-center justify-center w-96 bg-base-200/60 p-6">
     <h1 class="text-3xl pb-6 font-Raleway font-bold text-secondary">INSCRIPTION</h1>
     <form class="flex flex-col gap-4 w-full" onsubmit={submit}>
             <input class="bg-base-200/0 text-secondary w-full input input-secondary" bind:value={name} type="text" name="name" placeholder="Nom complet" />

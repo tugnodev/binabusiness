@@ -4,9 +4,13 @@
 	import { authClient } from "$lib/client/auth.client.js";
 	import { redirect } from '@sveltejs/kit';
     import SignIn from '$lib/client/components/SignIn.svelte';
+    import LogIn from '$lib/client/components/LogIn.svelte';
     const session = authClient.getSession();
 
-    let member = $state(false);
+    let account = $state(false);
+    let toggle = () => {
+        account = !account;
+    };
     
     if( session.value?.data ) {
         redirect(308,"/market");
@@ -20,16 +24,20 @@
             <h2 class="xv text-4xl sm:text-6xl flex-1 text-secondary font-PlayfairDisplay">Boutique de style et d'accessoires modernes</h2>
             <div class="flex flex-col items-center justify-center gap-2 flex-1">
                 <h3 class="text-md text-secondary font-Raleway">Connectez-vous pour acceder a la boutique</h3>
-                <SignIn />
-                <div class="w-full flex p-6 items-center justify-center gap-2">
+                {#if !account}
+                    <SignIn />
+                {:else}
+                    <LogIn />
+                {/if}
+                <div class="w-full hidden sm:flex p-6 items-center justify-center gap-2">
                     <h2 class="text-md text-secondary font-Raleway">J'ai deja un compte</h2>
-                    <button class="btn btn-xs btn-accent">Se connecter</button>
+                    <button class="btn btn-xs btn-accent" onclick={toggle}>Se connecter</button>
                 </div>
             </div>
         </div>
         <div class="w-full flex p-6 sm:hidden items-center justify-center gap-2">
             <h2 class="text-md text-secondary font-Raleway">J'ai deja un compte</h2>
-            <button class="btn btn-xs btn-accent">Se connecter</button>
+            <button class="btn btn-xs btn-accent" onclick={toggle}>Se connecter</button>
         </div>
         
     </Section>
