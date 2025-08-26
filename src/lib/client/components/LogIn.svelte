@@ -16,6 +16,10 @@
         <input class="bg-base-200/0 text-secondary w-full input input-secondary" placeholder="Mot de passe" type="password" name="password" id="password" bind:value={password}>
         <button class="btn btn-secondary" type="submit">Se connecter</button>
     </form>
+    <div class="divider">OU</div>
+    <div class="flex items-center justify-center gap-2 w-full">
+        <button class="btn btn-base-100 w-full" onclick={() => authClient.signInWithGoogle()}>Se connecter avec Google</button>
+    </div>
 </div>
 
 <style>

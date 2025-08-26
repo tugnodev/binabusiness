@@ -8,6 +8,14 @@
     let password = $state('');
     let confirmPassword = $state('');
 
+    $effect(() => {
+        if(password === confirmPassword && confirmPassword !== ''){
+            same = true;
+        }else{
+            same = false;
+        }
+    })
+
 
     function submit() {
         authClient.signUp(email, name, password);
@@ -27,7 +35,8 @@
             <span class="text-red-500">Les mots de passe ne sont pas identiques</span>
         {/if}
     </form>
-    <div class="pt-6 flex items-center justify-center gap-2 w-full">
+    <div class="divider">OU</div>
+    <div class="flex items-center justify-center gap-2 w-full">
         <button class="btn btn-base-100 w-full" onclick={() => authClient.signInWithGoogle()}>S'inscrire avec Google</button>
     </div>
 </div>

@@ -39,8 +39,9 @@ model Articles {
   id          Int      @id @default(autoincrement())
   userId      String
   name        String
-  images      String
+  imgurl      Int
   description String
+  tag         String
   price       Int
   stocke      Int
   createdAt   DateTime @default(now())
@@ -48,6 +49,17 @@ model Articles {
 
   user     User       @relation(fields: [userId], references: [id])
   comments Comments[]
+  images   Image[]    // Added opposite relation field
+}
+
+model Image {
+  id        Int      @id @default(autoincrement())
+  url       String
+  articleId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  article Articles @relation(fields: [articleId], references: [id])
 }
 
 model Comments {

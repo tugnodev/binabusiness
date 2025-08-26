@@ -21,9 +21,14 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         disableSignUp: false,
-        requireEmailVerification: true,
-        maxPasswordLength: 256,
+        requireEmailVerification: false,
+        maxPasswordLength: 32,
         minPasswordLength: 8,
     },
-    plugins:[]
+    plugins:[],
+    advanced: {
+        cookiePrefix : "binabusiness",
+        cookieDomain : "localhost",
+        cookieSecure : true,
+    }
 });

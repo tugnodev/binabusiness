@@ -5,5 +5,7 @@
 	let { children } = $props();
 </script>
 
-<Header />
-{@render children()}
+<div class="w-full h-full fixed z-10 bg-base-200/60">
+	<Header />
+	{@render children()}
+</div>

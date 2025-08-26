@@ -2,7 +2,7 @@
     import AdminBurger from './admin.burger.svelte';
 </script>
 
-<header class="flex justify-between items-center fixed z-30 w-full bg-base-100 p-2 shadow-sm h-16">
+<header class="flex justify-between items-center fixed z-30 w-full bg-base-200/60 p-2 shadow-sm h-16">
     <AdminBurger />
     <div>
         <h1 class="text-2xl font-Raleway font-extrabold" ><span class="text-primary">Bina</span><span class="text-secondary">Admin</span></h1>
