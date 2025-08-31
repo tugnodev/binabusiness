@@ -32,3 +32,5 @@ export const auth = betterAuth({
         cookieSecure : true,
     }
 });
+
+export type Auth = typeof auth;

@@ -1,20 +1,14 @@
 <script lang="ts">
     import Section from '$lib/client/components/Section.svelte';
     import '@fontsource-variable/playfair-display'
-	import { authClient } from "$lib/client/auth.client.js";
-	import { redirect } from '@sveltejs/kit';
     import SignIn from '$lib/client/components/SignIn.svelte';
     import LogIn from '$lib/client/components/LogIn.svelte';
-    const session = authClient.getSession();
 
     let account = $state(false);
     let toggle = () => {
         account = !account;
     };
     
-    if( session.value?.data ) {
-        redirect(308,"/market");
-    }
 </script>
 
 <div class="fixed z-20 w-full h-screen bg-base-200/60 flex items-center justify-center">

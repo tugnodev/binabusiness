@@ -13,12 +13,10 @@ export class ImageClient {
         const formData = new FormData();
         await Promise.all(this.images.map(async (img) => formData.append('files', img.file as Blob)));
         
-            console.log("Go to endpoint...")
             const response = await fetch("/api/uploads", {
                 method: "POST",
                 body: formData,
             });
-            console.log("Comming back...")
             const data = await response.json() as string[];
             return data;
     };
@@ -26,7 +24,14 @@ export class ImageClient {
     getPreviewImages = () => {
         return this.images.map(img => img.preview);
     }
-    getImages = () => {
-        return this.images;
+
+    deleteImage = async (url: string, id: number) => {
+        try {
+               const result = await fetch("/api/delete", { method: "DELETE", body:  JSON.stringify({url, id}) });
+               console.log(result);
+            
+        } catch (error) {
+            console.error(error);
+        }
     }
 }

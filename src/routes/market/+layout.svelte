@@ -6,6 +6,6 @@
 </script>
 
 <Header />
-<div class="w-full h-full fixed z-10 bg-base-200/60">
+<div class="w-full h-full absolute z-10 bg-base-200/60">
 	{@render children()}
 </div>

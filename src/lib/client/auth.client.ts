@@ -1,6 +1,6 @@
 import { goto } from "$app/navigation";
+import { redirect } from "@sveltejs/kit";
 import { createAuthClient } from "better-auth/svelte"; // make sure to import from better-auth/svelte
-
 
 class ClientAuth {
   client;
@@ -13,7 +13,8 @@ class ClientAuth {
 
 
   getSession = () => {
-    return this.client.useSession();
+    const session = this.client.useSession();
+    return session;
   };
 
   signInWithGoogle = async () => {
@@ -35,7 +36,7 @@ class ClientAuth {
     if(res.error){
       throw new Error(res.error.message);
     }else{
-      goto("/market");
+      redirect(308,"/market");
     }
 
   };
@@ -48,22 +49,23 @@ class ClientAuth {
       callbackURL: "/market"
     });
 
+    console.log(res)
 
-    if(res.data?.user){
-      const email = res.data?.user.email;
-
-      this.client.signIn.email({
-        email,
-        password
-      })
-
+    if(res.data){
+      console.log("render")
+      goto("/market");
     }
   };
 
   signOut = async () => {
     await this.client.signOut();
-    
   };
+
+  getID = () : string | undefined => {
+    const session = this.getSession();
+    const id = session.value?.data?.user.id;
+    return id;
+  }
 
 }
 

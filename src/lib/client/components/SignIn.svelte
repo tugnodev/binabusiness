@@ -1,6 +1,6 @@
 <script lang="ts">
     import { authClient } from "$lib/client/auth.client.js";
-    import { fly, slide } from "svelte/transition";
+    import { slide } from "svelte/transition";
 
     let same = $state(false);
     let name = $state('');

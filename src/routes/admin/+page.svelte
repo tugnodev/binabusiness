@@ -12,9 +12,9 @@
     }
 </script>
 
-<main class="mt-16 z-10 w-full h-screen flex items-center justify-start">
-    <Section class="flex flex-col gap-4 p-6 bg-base-200/60 w-full h-full items-center justify-center">
-        <div class="w-full flex flex-col lg:flex-row-reverse items-center justify-between gap-2">
+<main class="z-10 w-full h-full">
+    <Section class="flex flex-col min-h-screen gap-4 xl:mt-0 p-4 bg-base-200/60 w-full items-center justify-center">
+        <div class="w-full flex flex-col lg:flex-row items-center justify-between gap-2">
             <h1 class="text-4xl font-Raleway font-bold alert alert-success alert-dash p-2">Tableau de bord</h1>
             <div class="flex gap-2">
                 <a class="btn btn-primary" href="/admin/articles/">Ajouter un article</a>
