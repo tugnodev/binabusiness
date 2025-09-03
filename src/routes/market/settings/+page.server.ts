@@ -19,13 +19,13 @@ export const load: ServerLoad = async ({ request }) => {
     if (!session) {
         throw redirect(303, '/');
     }else{
-        const user = session.user as user
-        const id = user.id;
-        const userBase = await prisma.user.findUnique({
+        const usersession = session.user as user
+        const id = usersession.id;
+        const user = await prisma.user.findUnique({
             where: {
                 id
             },
         });
-        return { role: userBase?.vender };
+        return { user };
     }
 };

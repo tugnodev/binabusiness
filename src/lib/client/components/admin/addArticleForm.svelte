@@ -128,17 +128,17 @@
             <div class="w-full flex gap-2 carousel">
                 {#each previewImages as img}
                         <button type="button" onclick={() => preview = true} class="xv w-24 h-24 flex-shrink-0 rounded-lg bg-base-300 overflow-hidden join-item">
-                            <img src={img} alt="preview" class="w-full h-full object-cover">
+                            <img src={img.image} alt="preview" class="w-full h-full object-cover">
                         </button>
                     <button class="indicator-item b-i btn btn-primary btn-xs" onclick={(e) => { 
                         e.preventDefault();
-                        imageClient.deleteImage(img, id);
+                        imageClient.deleteImage(img.image, id);
                         previewImages = previewImages.filter((previewImage) => previewImage !== img);
-                        images = images.filter((image) => image.preview !== img);
+                        images = images.filter((image) => image.preview !== img.image);
                     }}>X</button>
                 {#if preview}
                     <div class="fixed top-0 left-0 right-0 bottom-0 z-50 bg-base-200/90 flex flex-col items-center justify-center gap-2 w-full h-full">
-                        <img src={img} alt="preview" class="w-full">
+                        <img src={img.image} alt="preview" class="w-full">
                         <button class="btn btn-primary" onclick={() => preview = false}>Fermer</button>
                     </div>
 

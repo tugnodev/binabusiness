@@ -22,7 +22,6 @@ model User {
   articles       Articles[]
   comments       Comments[]  @relation("UserComments")
   sentMsgs       Messagers[] @relation("SentMessages")
-  recvMsgs       Messagers[] @relation("ReceivedMessages")
   numbers        Numbers[]
   ordersAsBuyer  Orders[]    @relation("BuyerOrders")
   ordersAsSeller Orders[]    @relation("SellerOrders")
@@ -71,17 +70,25 @@ model Comments {
   buyer   User     @relation("UserComments", fields: [buyerId], references: [id])
 }
 
+model ChatBox {
+  id        String @id @default(uuid())
+  name      String
+  buyerId   String
+  sellerId  String
+  ChatBoxMessages Messagers[] @relation("ChatBoxMessages")
+}
+
 model Messagers {
   id         Int       @id @default(autoincrement())
   message    String
+  chatBoxId  String
   senderId   String
-  receiverId String
   sendedAt   DateTime  @default(now())
   readAt     DateTime?
   updatedAt  DateTime?
 
-  sender   User @relation("SentMessages", fields: [senderId], references: [id])
-  receiver User @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  chatBox ChatBox @relation("ChatBoxMessages", fields: [chatBoxId], references: [id])
+  sender  User    @relation("SentMessages", fields: [senderId], references: [id])
 }
 
 model Numbers {
@@ -110,7 +117,7 @@ model Orders {
 
 model Cards {
   id          Int    @id @default(autoincrement())
-  cardDetails Json
+  cardDetails String
   userId      String
 
   user User @relation(fields: [userId], references: [id])
