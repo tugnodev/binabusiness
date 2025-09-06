@@ -2,6 +2,8 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { env } from "$env/dynamic/private";
 import pkg from '@prisma/client';
+import { sveltekitCookies } from "better-auth/svelte-kit";
+import { getRequestEvent } from "$app/server";
 
 const { PrismaClient } = pkg;
 
@@ -14,7 +16,6 @@ export const auth = betterAuth({
     socialProviders: {
         google: {
             prompt: "select_account",
-            accessType: "offline",
             clientId: env.GOOGLE_ID!,
             clientSecret: env.GOOGLE_SECRET!,
         },
@@ -26,7 +27,7 @@ export const auth = betterAuth({
         maxPasswordLength: 32,
         minPasswordLength: 8,
     },
-    plugins:[],
+    plugins:[sveltekitCookies(getRequestEvent)],
     advanced: {
         cookiePrefix : "binabusiness",
         cookieSecure : true,

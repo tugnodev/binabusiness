@@ -5,7 +5,15 @@ class ClientAuth {
   client;
   
   constructor(){
-    this.client = createAuthClient();
+    this.client = createAuthClient({
+      cookiePrefix: "binabusiness",
+      cookieSecure: true,
+      basePath: "/api/auth",
+      storage: "cookies",
+      rememberMe: true,
+      sessionRefreshInterval: 15 * 60, // 15 minutes
+      sessionExpiry: 7 * 24 * 60 * 60, // 7 days
+    });
   }
 
 
