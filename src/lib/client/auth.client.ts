@@ -5,7 +5,7 @@ class ClientAuth {
   client;
   
   constructor(){
-    this.client = createAuthClient();
+    this.client = createAuthClient({ baseURL: '/api/auth' });
   }
 
 
