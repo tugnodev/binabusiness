@@ -8,7 +8,7 @@ class ClientAuth {
     this.client = createAuthClient({
       cookiePrefix: "binabusiness",
       cookieSecure: true,
-      basePath: "/api/auth",
+      baseURL: "https://binabusiness.vercel.app",
       storage: "cookies",
       rememberMe: true,
       sessionRefreshInterval: 15 * 60, // 15 minutes

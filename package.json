@@ -70,12 +70,6 @@
 			"@prisma/engines",
 			"prisma",
 			"@tailwindcss/oxide"
-		],
-		"trustedDependencies": [
-			"@prisma/client",
-			"@prisma/engines",
-			"prisma",
-			"@tailwindcss/oxide"
 		]
 	},
 	"dependencies": {

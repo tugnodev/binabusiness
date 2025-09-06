@@ -29,7 +29,7 @@ export const auth = betterAuth({
     },
     plugins:[sveltekitCookies(getRequestEvent)],
     advanced: {
-        cookiePrefix : "binabusiness",
+        cookiePrefix : "binabusiness.vercel.app",
         cookieSecure : true,
     }
 });
