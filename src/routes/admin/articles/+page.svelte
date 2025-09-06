@@ -30,14 +30,14 @@
 </script>
 
 <main class="z-10 w-full h-full xl:flex">
-    <Section class="flex flex-col min-h-screen gap-4 xl:mt-0 p-4 bg-base-200/60 w-full items-center justify-center">
+    <Section class="flex flex-col h-full overflow-y-auto no-scrollbar gap-4 xl:mt-0 p-4 bg-base-200/60 w-full items-center justify-center">
         <h1 class="text-4xl font-Raleway font-bold alert alert-success alert-dash">Articles</h1>
         <div class="flex flex-col xl:flex-row gap-4 justify-center items-center">
             <div>
                 <ArticleForm userId={userId} />
             </div>
             <div class="w-full">
-                <div class="overflow-y-auto min-w-80 w-full bg-base-200/60 p-4" >
+                <div class="overflow-y-auto min-w-80 rounded-lg border-2 border-base-200 backdrop-blur-xs w-full bg-base-200/60 p-4" >
                     <div class="flex pt-2 items-center justify-center w-full">
                         <h2 class="text-2xl font-bold">Liste des articles</h2>
                     </div>

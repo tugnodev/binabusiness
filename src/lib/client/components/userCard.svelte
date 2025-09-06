@@ -43,7 +43,7 @@
     }
 </script>
 
-<div class="card w-96 bg-base-200/60 backdrop-blur-lg rounded-xl shadow-xl">
+<div class="card w-96 bg-base-200/60 border-2 border-base-200 backdrop-blur-lg rounded-xl shadow-xl">
     <div class="card-body flex flex-col items-center">
         <button onclick={() => fileInput?.click()} class="flex justify-center">
             <input type="file" accept="image/*" class="hidden" bind:this={fileInput} oninput={handleImageChange}>
@@ -63,7 +63,7 @@
             {/if}
             </div>
             <div class="flex gap-1 flex-1">
-                <button onclick={() => showModal = true} class="btn btn-primary btn-xs">profile</button>
+                <button onclick={() => showModal = true} class="btn btn-primary btn-xs">Mot de passe</button>
                 <button onclick={logout} class="btn btn-error btn-xs">Deconnexion</button>
             </div>
         </div>
@@ -71,8 +71,8 @@
 </div>
 
 {#if showModal}
-    <div transition:fade={{duration: 90}} class="absolute z-50 top-0 left-0 w-full h-full backdrop-blur-sm flex justify-center items-center">
-        <div class="max-w-lg w-full bg-base-200/60 rounded-lg p-2 flex flex-col items-center">
+    <div transition:fade={{duration: 90}} class="absolute z-50 top-0 left-0 w-full h-full backdrop-blur-sm p-2 flex justify-center items-center">
+        <div class="max-w-lg w-full bg-base-200/60 border-2 border-base-200 backdrop-blur-xs rounded-lg p-2 flex flex-col items-center">
             <div class="w-full flex justify-end">
                 <button onclick={() => showModal = false} class="btn btn-error w-8 h-8 rounded-full">X</button>
             </div>

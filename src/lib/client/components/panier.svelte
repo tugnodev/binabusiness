@@ -66,14 +66,14 @@
     
 </script>
 
-<div in:fly={{ x: 700 }} out:fly={{ x: 700 }} class="w-96 rounded-2xl border-2 gap-2 border-base-200 fixed z-20 top-16 p-4 right-2 flex flex-col justify-between items-center max-h-96 transition-all duration-300 bg-base-200/60 shadow-lg backdrop-blur-sm">
+<div in:fly={{ x: 700 }} out:fly={{ x: 700 }} class="w-96 rounded-2xl border-2 gap-2 border-base-200 fixed z-20 top-16 p-4 right-2 flex flex-col justify-between items-center max-h-[500px] transition-all duration-300 bg-base-200/60 shadow-lg backdrop-blur-sm">
     <div class="flex justify-between items-center w-full h-full">
         <h1 class="text-lg font-Raleway font-extrabold">MON PANIER</h1>
         <button onclick={() => resetCart()} class="btn btn-error btn-sm rounded-full">Vider</button>
     </div>
     <div class="flex flex-col gap-2 overflow-y-auto no-scrollbar justify-start items-center w-full h-full">
         {#each $articleCart as article}
-            <div class="flex p-2 items-center gap-2 w-full bg-base-200/60 rounded-2xl border-2 border-base-200 hover:bg-primary/40 shadow-sm transition-all duration-300">
+            <div in:fly={{ y: 700 }} out:fly={{ y: 700 }} class="flex p-2 items-center gap-2 w-full bg-base-200/60 rounded-2xl border-2 border-base-200 hover:bg-primary/40 shadow-sm transition-all duration-300">
                 <img src={article.articleImage} alt={article.articleName} class="rounded-full object-cover border-4 border-base-200 w-14 h-14">
                 <div class="flex gap-2 justify-between w-full">
                     <div class="flex flex-col">

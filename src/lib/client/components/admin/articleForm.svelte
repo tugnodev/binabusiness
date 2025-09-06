@@ -118,7 +118,7 @@
     }
 </script>
 
-<form class="w-96 bg-base-200/60 p-6 flex flex-col gap-4" enctype="multipart/form-data" method="POST">
+<form class="w-96 bg-base-200/60 p-6 backdrop-blur-xs border-2 border-base-200 rounded-lg flex flex-col gap-4" enctype="multipart/form-data" method="POST">
     <div class="w-full flex flex-col items-center justify-center">
         <h1 class="text-2xl font-Raleway font-bold text-secondary">Ajouter un article</h1>
     </div>

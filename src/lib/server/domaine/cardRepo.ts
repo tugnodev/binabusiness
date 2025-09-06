@@ -42,7 +42,6 @@ class CardServices {
     }
 
     async patchCard(cardDetails: Card){
-        console.log(cardDetails)
         const card = await prisma.cards.update({
             where: {
                 id: cardDetails.id,

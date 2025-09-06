@@ -17,7 +17,7 @@ export const load = async ({ request }) => {
     orders.map( async (order) => {
         order.articleDetails = JSON.parse(order.articleDetails);
         const buyerName = await prisma.user.findUnique({ where: { id: order.buyerId }, select: { name: true } });
-        order.buyerId = buyerName!.name!;
+        order.buyerId = await buyerName!.name!;
     });
     return {
         user,
