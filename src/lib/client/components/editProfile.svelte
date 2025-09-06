@@ -1,9 +1,23 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
+    import { authClient } from "$lib/client/auth.client.js";
 
     const {user} = $props();
     let password = $state('');
     let newPassword = $state('');
     let confirmPassword = $state('');
+
+    const changePassword = async () => {
+        const res = await authClient.changePassword({
+            newPassword,
+            currentPassword: password
+        });
+        if(res === "mot de passe changé avec succès"){
+            goto('/');
+        }else{
+            alert(res);
+        }  
+    }
 
 </script>
 
@@ -16,6 +30,6 @@
         <input class="input input-error bg-transparent" type="password" bind:value={password} placeholder="Mot de passe actuel" name="password">
         <input class="input input-primary bg-transparent" type="password" bind:value={newPassword} placeholder="Nouveau mot de passe" name="newPassword">
         <input class="input input-primary bg-transparent" type="password" bind:value={confirmPassword} placeholder="Confirmer le nouveau mot de passe" name="confirmPassword">
-        <button class="btn btn-primary" type="submit">Changer de mot de passe</button>
+        <button onclick={changePassword} class="btn btn-primary" type="submit">Changer de mot de passe</button>
     </form>
 </div>

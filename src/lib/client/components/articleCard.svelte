@@ -2,9 +2,22 @@
     import type { createArticleDto } from "../articlesClient.js";
     import type { Articlecart } from "./panier.svelte";
     import { articleCart, articleCartStore } from "$lib/stores/articlesStore.js";
+    import OrderModal from "./orderModal.svelte";
+    import { eventBus } from "../articlesClient.js";
+	  import { fade } from "svelte/transition";
+	  import { get } from 'svelte/store';
+	import { goto } from "$app/navigation";
 
     const {article, card} = $props()
-    const modal = $state(false);
+    let modal = $state(false);
+    let orderModal = $state(false);
+
+    const orderArray: Articlecart[] = [{articleId: article.id!, articleName: article.titre, articleImage: article.images[0], articlePrice: article.prix, quantity: 1}];
+
+    function toggleModal() {
+      modal = false;
+      orderModal = true;
+    }
 
     async function addToCart(article: createArticleDto) {
       const newArticle: Articlecart = {
@@ -16,14 +29,22 @@
       };
       articleCartStore.update(newArticle);
 
+      const updatedCart = get(articleCart);
       await fetch('/market/cards', {
         method: 'PATCH',
         body: JSON.stringify({
           id: card.id,
-          cardDetails: JSON.stringify($articleCart)
+          cardDetails: JSON.stringify(updatedCart)
         })
       });
     }
+
+    eventBus.addEventListener('resetCart', () => {
+        setTimeout(() => {
+            orderModal = false;
+            goto('/market/commandes');
+        }, 1000);
+    });
 
 </script>
 
@@ -47,9 +68,9 @@
       </div>
       <p class="texte-Raleway">{article.description}</p>
       <div class="card-actions w-full flex justify-between items-center gap-1">
-        <button class="btn btn-sm btn-primary">Voire le produit</button>
+        <button onclick={() => modal = true} class="btn btn-sm btn-primary">Voire le produit</button>
         <div class="flex flex-row gap-1">
-          <button aria-label="Acheter" class="btn btn-sm btn-success">
+          <button onclick={() => orderModal = true} aria-label="Acheter" class="btn btn-sm btn-success">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-full w-full" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
               <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -79,14 +100,66 @@
   </div>
 
 {#if modal}
-<div class="modal modal-sm modal-middle">
-    <div class="modal-box">
-      <h3 class="text-lg font-bold">Hello!</h3>
-      <p class="py-4">Are you sure you want to delete this item?</p>
-      <div class="modal-action">
-        <button class="btn">Delete</button>
-        <button class="btn btn-outline">Cancel</button>
+  <div transition:fade={{duration: 100}} class="absolute top-0 left-0 w-full h-full bg-base-200/60 backdrop-blur-xs px-4 flex items-center justify-center z-50">
+    <div transition:fade={{duration: 50}} class="max-w-7xl flex flex-col bg-base-200/60 backdrop-blur-xs min-w-96 w-full rounded-lg border-2 border-base-200 shadow-lg">
+      <div class="flex flex-row gap-2 justify-start-reverse items-center p-4 border-b-2 border-base-200">
+        <div role="alert" class="w-full alert alert-warning alert-soft">
+          <span>Veillez defiler pour voire les autres images.</span>
+        </div>
+        <button aria-label="fermer" onclick={() => modal = false} class="btn btn-error btn-sm btn-circle btn-error/20 hover:btn-error/30">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier"> 
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path> 
+            </g>
+          </svg>
+        </button>
+      </div>
+      <div class="flex flex-col md:flex-row gap-4 p-4">
+        <div class="flex-1 carousel carousel-center max-h-96 w-full md:w-1/2">
+          {#each article.images as image }
+            <div class="carousel-item w-full" >
+              <img 
+                class="rounded-box object-cover w-full h-auto"
+                src={image} alt={image}>
+            </div>
+          {/each}
+        </div>
+        <div class="flex-1 flex flex-col gap-4">
+          <h2 class="text-2xl font-Raleway font-bold">{article.titre}</h2>
+          <p class="texte-Raleway">{article.description}</p>
+          <div class="flex flex-row gap-2 flex-wrap">
+            {#each article.tag as tag }
+                <span class="text-xs badge badge-primary">{tag}</span>
+            {/each}
+          </div>
+          <span class="text-xl font-bold badge badge-success w-fit">{article.prix} XOF</span>
+          <div class="flex flex-row gap-2 mt-auto">
+            <button onclick={toggleModal} class="btn btn-success btn-sm flex-1">Commander</button>
+            <button onclick={() => addToCart(article)} class="btn btn-sm btn-info flex-1">Ajouter au panier</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+{/if}
+
+{#if orderModal}
+    <div transition:fade={{duration: 500}} class="absolute top-0 left-0 w-full h-full bg-base-200/60 backdrop-blur-xs px-4 flex items-center justify-center z-50">
+      <div transition:fade={{duration: 100}} class="max-w-7xl flex flex-col bg-base-200/60 backdrop-blur-xs min-w-96 h-96 overflow-y-auto no-scrollbar w-full rounded-lg border-2 border-base-200 shadow-lg">
+        <div class="flex flex-row gap-2 justify-end items-center p-4 border-b-2 border-base-200">
+        <button aria-label="fermer" onclick={() => orderModal = false} class="btn btn-error btn-sm btn-circle btn-error/20 hover:btn-error/30">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier"> 
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path> 
+            </g>
+          </svg>
+        </button>
+      </div>
+        <OrderModal order={orderArray} />
+      </div>
+    </div>
 {/if}

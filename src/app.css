@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @plugin "daisyui";
 
+
 @layer utilities {
   .no-scrollbar {
     scrollbar-width: none;
@@ -55,4 +56,3 @@
     --depth: 1;
     --noise: 1;
   }
-  

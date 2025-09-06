@@ -27,7 +27,7 @@
         <ul class="flex flex-col text-center font-Raleway font-bold text-xl text-secondary w-full">
             <li class="p-2 w-full border-b border-secondary border-t "><button class="w-full" onclick={() => redirect('/admin')}>Tableau de bord</button></li>
             <li class="p-2 w-full border-b border-secondary"><button class="w-full" onclick={() => redirect('/admin/articles')}>Articles</button></li>
-            <li class="p-2 w-full border-b border-secondary"><button class="w-full" onclick={() => redirect('/admin/chat')}>Chat</button></li>
+            <li class="p-2 w-full border-b border-secondary"><button class="w-full" onclick={() => redirect('/admin/orders')}>Commandes</button></li>
             <li class="p-2 w-full border-b border-secondary"><button class="w-full" onclick={() => redirect('/admin/settings')}>Parametres</button></li>
         </ul>
     </div>

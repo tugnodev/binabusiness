@@ -43,7 +43,7 @@
     }
 </script>
 
-<div class="card w-96 bg-base-200/60 rounded-none shadow-xl">
+<div class="card w-96 bg-base-200/60 backdrop-blur-lg rounded-xl shadow-xl">
     <div class="card-body flex flex-col items-center">
         <button onclick={() => fileInput?.click()} class="flex justify-center">
             <input type="file" accept="image/*" class="hidden" bind:this={fileInput} oninput={handleImageChange}>
@@ -55,18 +55,14 @@
         </div>
         <div class="flex items-center gap-2">
             <p>{user.email}</p>
-            {#if user.emailVerified}
-                <span class="badge badge-outline badge-success">Verified ✅</span>
-            {:else}
-                <span class="badge badge-outline badge-error">Verified ❌</span>
-                <button onclick={() => authClient.eMailVerify()} class="btn btn-success btn-xs">Verifier</button>
-            {/if}
         </div>
-        <div class="card-actions w-full flex items-center justify-between">
-            {#if user.vender}
+        <div class="card-actions w-full flex items-center">
+            <div class="flex gap-1 flex-1">
+                {#if user.vender}
                 <button onclick={goToAdmin} class="btn btn-success btn-sm">admin</button>
             {/if}
-            <div class="flex gap-1">
+            </div>
+            <div class="flex gap-1 flex-1">
                 <button onclick={() => showModal = true} class="btn btn-primary btn-xs">profile</button>
                 <button onclick={logout} class="btn btn-error btn-xs">Deconnexion</button>
             </div>

@@ -24,7 +24,6 @@ model User {
   sentMsgs       Messagers[] @relation("SentMessages")
   numbers        Numbers[]
   ordersAsBuyer  Orders[]    @relation("BuyerOrders")
-  ordersAsSeller Orders[]    @relation("SellerOrders")
 
   cards         Cards[]
   sessions      Session[]
@@ -103,16 +102,14 @@ model Numbers {
 
 model Orders {
   id             Int      @id @default(autoincrement())
-  articleDetails Json
+  name           String
+  articleDetails String
   buyerId        String
-  sellerId       String
-  orderTime      String?
-  orderStatus    String   @default("init")
+  orderStatus    String   @default("commande en cours")
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
   buyer  User @relation("BuyerOrders", fields: [buyerId], references: [id])
-  seller User @relation("SellerOrders", fields: [sellerId], references: [id])
 }
 
 model Cards {

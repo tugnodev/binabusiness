@@ -7,7 +7,7 @@
     
 </script>
 
-<main class=" bg-base-200/60 h-full w-full">
+<main class="z-10 w-full h-full flex items-center justify-center overflow-y-auto no-scrollbar">
     <Section class="">
         <div class="w-full flex justify-center">
             <UserCard user={data.user} />

@@ -1,4 +1,3 @@
-import { goto } from "$app/navigation";
 import { redirect } from "@sveltejs/kit";
 import { createAuthClient } from "better-auth/svelte"; // make sure to import from better-auth/svelte
 
@@ -22,7 +21,13 @@ class ClientAuth {
       provider: "google",
       callbackURL: "/market"
     });
-    return data;
+
+    if(data.error){
+      throw new Error(data.error.message);
+    }else{
+      redirect(308,"/market");
+    }
+
   };
 
   signIn = async (email: string, password: string ) => {
@@ -51,9 +56,10 @@ class ClientAuth {
 
     console.log(res)
 
-    if(res.data){
-      console.log("render")
-      goto("/market");
+    if(res.error){
+      throw new Error(res.error.message);
+    }else{
+      redirect(308,"/market");
     }
   };
 
@@ -63,7 +69,7 @@ class ClientAuth {
 
   eMailVerify = async () => {
     console.log("verify");
-    const session = this.getSession();
+    const session = await this.getSession();
     const token = session.value?.data?.session?.token as string;
     if(!token){
       return "error pendant la verification de l'email";
@@ -83,6 +89,7 @@ class ClientAuth {
   };
 
   changePassword = async ({newPassword, currentPassword}: {newPassword: string, currentPassword: string}) => {
+    console.log(newPassword, currentPassword)
     const res = await this.client.changePassword({
       newPassword,
       currentPassword,
