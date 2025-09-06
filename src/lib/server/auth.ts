@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import {GOOGLE_ID, GOOGLE_SECRET} from "$env/static/private";
+import { env } from "$env/dynamic/private";
 import pkg from '@prisma/client';
 
 const { PrismaClient } = pkg;
@@ -15,8 +15,8 @@ export const auth = betterAuth({
         google: {
             prompt: "select_account",
             accessType: "offline",
-            clientId: GOOGLE_ID,
-            clientSecret: GOOGLE_SECRET,
+            clientId: env.GOOGLE_ID!,
+            clientSecret: env.GOOGLE_SECRET!,
         },
     },
     emailAndPassword: {
