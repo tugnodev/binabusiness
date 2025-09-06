@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { createArticleDto } from "../articlesClient.js";
-    import type { Articlecart } from "./panier.svelte";
+import type { Articlecart } from "$lib/types/cart.js";
     import { articleCart, articleCartStore } from "$lib/stores/articlesStore.js";
     import OrderModal from "./orderModal.svelte";
     import { eventBus } from "../articlesClient.js";

@@ -1,4 +1,4 @@
-import type { Articlecart } from '$lib/client/components/panier.svelte';
+import type { Articlecart } from '$lib/types/cart.js';
 import { writable } from 'svelte/store';
 
 export const articleCart = writable<Articlecart[]>([]);

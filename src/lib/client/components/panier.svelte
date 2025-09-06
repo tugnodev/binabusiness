@@ -1,13 +1,3 @@
-<script module>
-    export type Articlecart = {
-        articleId: number;
-        articleName: string;
-        articleImage: string;
-        articlePrice: number;
-        quantity: number;
-    };
-</script>
-
 <script lang="ts">
     import { fade, fly } from "svelte/transition";
     import { articleCart, articleCartStore } from "$lib/stores/articlesStore.js";

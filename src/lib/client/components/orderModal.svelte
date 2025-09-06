@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fly } from "svelte/transition";
     import { userStore } from "$lib/stores/user.js";
-    import type { Articlecart } from "./panier.svelte";
+import type { Articlecart } from "$lib/types/cart.js";
     import { eventBus } from "../articlesClient.js";
     import { get } from 'svelte/store';
 
