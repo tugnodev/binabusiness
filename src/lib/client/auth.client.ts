@@ -1,13 +1,11 @@
-import { redirect } from "@sveltejs/kit";
-import { createAuthClient } from "better-auth/svelte"; // make sure to import from better-auth/svelte
+import { goto } from "$app/navigation";
+import { createAuthClient } from "better-auth/svelte";
 
 class ClientAuth {
   client;
   
   constructor(){
-    this.client = createAuthClient({
-      baseURL: 'http://localhost:5173',
-    });
+    this.client = createAuthClient();
   }
 
 
@@ -25,7 +23,7 @@ class ClientAuth {
     if(data.error){
       throw new Error(data.error.message);
     }else{
-      redirect(308,"/market");
+      goto("/market");
     }
 
   };
@@ -41,7 +39,7 @@ class ClientAuth {
     if(res.error){
       throw new Error(res.error.message);
     }else{
-      redirect(308,"/market");
+      goto("/market");
     }
 
   };
@@ -54,21 +52,23 @@ class ClientAuth {
       callbackURL: "/market"
     });
 
-    console.log(res)
-
     if(res.error){
       throw new Error(res.error.message);
     }else{
-      redirect(308,"/market");
+      goto("/market");
     }
   };
 
   signOut = async () => {
-    await this.client.signOut();
+    const res = await this.client.signOut();
+    if(res.error){
+      throw new Error(res.error.message);
+    }else{
+      goto('/');
+    }
   };
 
   eMailVerify = async () => {
-    console.log("verify");
     const session = await this.getSession();
     const token = session.value?.data?.session?.token as string;
     if(!token){
@@ -80,7 +80,6 @@ class ClientAuth {
         callbackURL: "/market"
       }
     });
-    console.log(res)
     if(res.error){
       return "error pendant la verification de l'email";
     }else{
@@ -89,7 +88,6 @@ class ClientAuth {
   };
 
   changePassword = async ({newPassword, currentPassword}: {newPassword: string, currentPassword: string}) => {
-    console.log(newPassword, currentPassword)
     const res = await this.client.changePassword({
       newPassword,
       currentPassword,

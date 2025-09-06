@@ -10,7 +10,6 @@
     let fileInput: HTMLInputElement | null = null;
     const logout = () => {
         authClient.signOut();
-        goto('/');
     }
     const handleImageChange = async (event: Event) => {
         const target = event.target as HTMLInputElement;

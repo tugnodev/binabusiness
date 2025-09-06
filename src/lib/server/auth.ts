@@ -28,7 +28,7 @@ export const auth = betterAuth({
     plugins:[],
     advanced: {
         cookiePrefix : "binabusiness",
-        cookieDomain : "localhost",
+        cookieDomain : "binabusiness.vercel.app",
         cookieSecure : true,
     }
 });

@@ -97,8 +97,8 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-1 flex-wrap gap-2">
-                                        <div class="badge badge-outline">
-                                            le : {`${order.createdAt}`.replace(/GMT\+0000 \(Coordinated Universal Time\)/g, '')}
+                                        <div class="badge overflow-hidden badge-outline">
+                                            le : {`${order.createdAt}`.replace(/GMT\+000 \(Coordinated Universal Time\)/g, '')}
                                         </div>
                                     </div>
                                 </div>
