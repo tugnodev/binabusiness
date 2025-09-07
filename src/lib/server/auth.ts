@@ -10,6 +10,11 @@ const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 export const auth = betterAuth({
     appName: "Binabusiness",
+    trustedOrigins: [
+        "http://localhost:5173",
+        "http://192.168.1.16:5173",
+        "https://binabusiness.vercel.app",
+    ],
     database: prismaAdapter(
         prisma, 
         { provider: "sqlite" }),
