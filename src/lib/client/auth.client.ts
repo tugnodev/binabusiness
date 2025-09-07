@@ -6,13 +6,8 @@ class ClientAuth {
   
   constructor(){
     this.client = createAuthClient({
-      cookiePrefix: "binabusiness",
-      cookieSecure: true,
-      baseURL: "https://binabusiness.vercel.app",
-      storage: "cookies",
-      rememberMe: true,
-      sessionRefreshInterval: 15 * 60, // 15 minutes
-      sessionExpiry: 7 * 24 * 60 * 60, // 7 days
+      baseURL: "http://localhost:5173",
+      basePath: "/api/auth",
     });
   }
 
