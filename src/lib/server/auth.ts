@@ -12,7 +12,6 @@ export const auth = betterAuth({
     appName: "Binabusiness",
     secret: env.BETTER_AUTH_SECRET!,
     baseURL: env.ENV === "prod" ? "https://binabusiness.vercel.app" : "http://localhost:5173",
-    basePath: "api/auth",
     origin: env.ENV === "prod" ? "https://binabusiness.vercel.app" : "http://localhost:5173",
     trustedOrigins: [
         "http://localhost:5173",
