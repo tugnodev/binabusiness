@@ -29,3 +29,12 @@ export const load: ServerLoad = async ({ request }) => {
         return { user };
     }
 };
+
+export const actions = {
+    logout: async ({ request }) => {
+        const res = await auth.api.signOut({ headers: request.headers });
+        if(res.success){
+            throw redirect(303, '/');
+        }
+    }
+}

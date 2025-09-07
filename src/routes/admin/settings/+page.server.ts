@@ -23,3 +23,13 @@ export const load: PageServerLoad = async ({ request }) => {
         card
     };
 }
+
+export const actions = {
+    logout: async ({ request }) => {
+        const res = await auth.api.signOut({ headers: request.headers });
+        console.log(res);
+        if(res.success){
+            throw redirect(303, '/');
+        }
+    }
+}

@@ -62,6 +62,7 @@ class ClientAuth {
   signOut = async () => {
     const res = await this.client.signOut();
     if(res.error){
+      console.log(res);
       throw new Error(res.error.message);
     }else{
       goto('/');

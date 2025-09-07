@@ -3,6 +3,7 @@
 	import { goto } from "$app/navigation";
     import EditProfile from "./editProfile.svelte";
 	import { fade } from "svelte/transition";
+	import { enhance } from "$app/forms";
     
     const {user} = $props();
     let showModal = $state(false);
@@ -63,7 +64,10 @@
             </div>
             <div class="flex gap-1 flex-1">
                 <button onclick={() => showModal = true} class="btn btn-primary btn-xs">Mot de passe</button>
-                <button onclick={logout} class="btn btn-error btn-xs">Deconnexion</button>
+                <form action="?/logout" method="POST" use:enhance>
+                    <input type="hidden" name="logout" value="logout">
+                    <button type="submit" class="btn btn-error btn-xs">Deconnexion</button>
+                </form>
             </div>
         </div>
     </div>
