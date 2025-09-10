@@ -13,7 +13,7 @@ export class ImageClient {
         const formData = new FormData();
         await Promise.all(this.images.map(async (img) => formData.append('files', img.file as Blob)));
         
-            const response = await fetch("/api/uploads", {
+            const response = await fetch("/api/upload", {
                 method: "POST",
                 body: formData,
             });
@@ -27,7 +27,7 @@ export class ImageClient {
 
     deleteImage = async (url: string, id: number) => {
         try {
-               const result = await fetch("/api/delete", { method: "DELETE", body:  JSON.stringify({url, id}) });
+               const result = await fetch("/api/upload", { method: "DELETE", body:  JSON.stringify({url, id}) });
                console.log(result);
             
         } catch (error) {

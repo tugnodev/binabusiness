@@ -25,8 +25,9 @@
             images = images.filter(img => img.image !== image);
         }else{
             console.log(image);
-            const res = await fetch(`/uploads/${image}`, {
-                method: 'DELETE'
+            const res = await fetch(`/api/upload`, {
+                method: 'DELETE',
+                body: JSON.stringify({url: image, id: images.find(img => img.image === image)?.id})
             })
             console.log(res);
             if(res.ok){
@@ -58,6 +59,7 @@
             articleId: image.articleId,
             image: image.image
         }));
+        console.log(images);
     };
 
     // Set up the event listener
@@ -69,12 +71,27 @@
         if(!content?.files) return;
 
         const filesop = Array.from(content.files);
+
+        if(method === 'PATCH'){
+            const formData = new FormData();
+            formData.append('articleId', formState.id.toString());
+            filesop.forEach(file => formData.append('images', file));
+            const res = await fetch(`/api/upload`, {
+                method: 'POST',
+                body: formData
+            })
+            const data = await res.json();
+            images.push(...data.images.map((image:{url:string}) => ({
+                image: image.url
+            })));
+        }
+
         filesop.map(file => {
             images.push({
                 image: URL.createObjectURL(file)
             })
         })
-        files = filesop;
+        files.push(...filesop);
     }
 
     // Handle reset form
@@ -102,9 +119,11 @@
         formData.append('tag', formState.tag);
         formData.append('prix', formState.prix.toString());
         formData.append('stock', formState.stock.toString());
-        files.forEach(file => formData.append('images', file));
         if(method === 'PATCH'){
             formData.append('articleId', formState.id.toString());
+            images.forEach(image => formData.append('images', JSON.stringify(image.image)));
+        }else{
+            files.forEach(file => formData.append('images', file));
         }
 
         const res = await fetch('/admin/articles', {
@@ -113,8 +132,8 @@
         })
         const data = await res.json();
         resetForm();
-        window.location.reload();
         console.log(data);
+        window.location.reload();
     }
 </script>
 

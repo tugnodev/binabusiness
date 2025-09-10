@@ -2,6 +2,7 @@ import type { ServerLoad } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
 import { auth } from '$lib/server/auth.js';
 import { prisma } from '$lib/server/prisma.js';
+import type { User } from '@prisma/client';
 
 class State {
   async totalArticle () {
@@ -58,6 +59,10 @@ const state = new State();
 export const load: ServerLoad = async ({ request }) => {
   const session = await auth.api.getSession({ headers: request.headers });
   if (!session) {
+    throw redirect(303, '/');
+  }
+  const user = session.user as User;
+  if (!user.vender) {
     throw redirect(303, '/');
   }
 

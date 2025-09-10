@@ -24,8 +24,8 @@ export const POST: RequestHandler = async ({ request }) => {
       );
     }
 
-    const imagePromises = articleData.images!.map(image => imageFsRepo.saveImage(image));
-    const imageUrls = await Promise.all(imagePromises);
+    const imagePromises = articleData.images!.map(image => imageFsRepo.saveImage(image, "articles"));
+    const imageUrls = await Promise.all(imagePromises.map(p => p.then(res => res?.url)));
     console.log(imageUrls);
 
     const articleDataDto: CreateArticleDto = {
@@ -41,7 +41,7 @@ export const POST: RequestHandler = async ({ request }) => {
     console.log(article);
 
     //save images
-    const images = await imageRepo.saveImage(article.id, imageUrls)
+    const images = await imageRepo.saveImage(article.id, imageUrls as string[])
     console.log(images);
 
     return json({
@@ -81,7 +81,6 @@ export const DELETE: RequestHandler = async ({ request }) => {
 export const PATCH: RequestHandler = async (event) => {
   try {
     const data = await event.request.formData();
-    console.log(data.get('articleId'));
     const articleId = parseInt(data.get('articleId')?.toString() ?? '0');
     const articleData: CreateArticleDto = {
       userId: data.get('userId')?.toString() ?? '',
@@ -90,9 +89,8 @@ export const PATCH: RequestHandler = async (event) => {
       tag: data.get('tag')?.toString() ?? '',
       prix: Number(data.get('prix') ?? 0),
       stock: Number(data.get('stock') ?? 0),
-      images: JSON.parse(data.get('images')?.toString() ?? '[]') as string[]
     };
-    
+
     const article = await articleRepo.update(articleId, articleData);
     return json({
       success: true,

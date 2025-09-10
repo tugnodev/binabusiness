@@ -3,20 +3,20 @@ import { prisma } from '$lib/server/prisma.js';
 
 
 export const POST = async ({ request }) => {
+    console.log("Request received in /market/settings");
     const data = await request.formData();
     const file = data.get('image') as File;
     const id = data.get('id') as string;
-    const url = await imageFsRepo.saveImage(file);
+    const imageData = await imageFsRepo.saveImage(file, "profiles");
 
     const res = await prisma.user.update({
         where: {
             id
         },
         data: {
-            image: url
+            image: imageData!.url
         }
     });
-    console.log(res)
     if(res){
         return new Response(JSON.stringify({ success: true }));
     }else{

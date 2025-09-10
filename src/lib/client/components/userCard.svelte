@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { authClient } from "../auth.client.js";
-	import { goto } from "$app/navigation";
     import EditProfile from "./editProfile.svelte";
 	import { fade } from "svelte/transition";
 	import { enhance } from "$app/forms";
@@ -22,19 +21,22 @@
                 user.image = result;
             };
             reader.readAsDataURL(file);
+            //recuperer l'id de l'utilisateur
+            const id = user.id;
 
+            // Upload the image to the server
             const formData = new FormData();
             formData.append('image', file);
-            formData.append('id', user.id);
-            const res = await fetch('/market/settings', {
+            formData.append('id', id);
+            const response = await fetch('/market/settings', {
                 method: 'POST',
                 body: formData
             });
-            const data = await res.json();
-            if(data.success){
-                console.log('Image updated successfully');
-            }else{
-                console.log('Failed to update image');
+            if (response.ok) {
+                const data = await response.json();
+                user.image = data.url; // Assuming the server returns the image URL in { url: '...' }
+            } else {
+                console.error('Image upload failed');
             }
         }
     }

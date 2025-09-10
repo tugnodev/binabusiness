@@ -36,7 +36,8 @@
       aria-label="Contact téléphone"
       class="bg-base-200/60 backdrop-blur-sm border-2 border-base-200 p-6 rounded-2xl w-full aspect-square flex flex-col items-center justify-center"
     >
-      <svg
+      <a aria-label="Contact whatsapp" target="_blank" href="https://wa.me/221773122305">
+        <svg
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         class="h-10 w-10 text-green-600 mb-4"
@@ -51,8 +52,9 @@
           d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.66l1.2 2.88a1 1 0 01-.27 1.09L8.4 9.6a11.05 11.05 0 005.99 5.99l1.97-1.79a1 1 0 011.09-.27l2.88 1.2a1 1 0 01.66.94V19a2 2 0 01-2 2h-1C9.82 21 3 14.18 3 6V5z"
         />
       </svg>
+      </a>
       <h2 class="text-lg font-semibold">Téléphone</h2>
-      <p class="text-sm opacity-90">+221 77 123 45 67</p>
+      <p class="text-sm opacity-90">+221 77 312 23 05</p>
     </div>
 
     <!-- Adresse -->
@@ -121,7 +123,7 @@
           </svg>
         </a>
         <a
-          href="#"
+          href="https://www.facebook.com/share/1CrL3tzokC/?mibextid=wwXIfr"
           aria-label="Facebook"
           class="text-blue-700 hover:text-blue-900"
         >

@@ -67,6 +67,7 @@ class ArticleRepo {
     }
 
     async update (id: number, data: Partial<CreateArticleDto>){
+        console.log(data);
         const article: ArticleDto = await prisma.articles.update({
             where: { id },
             data: {
@@ -75,7 +76,7 @@ class ArticleRepo {
                 description: data.description,
                 tag: data.tag,
                 prix: data.prix,
-                stock: data.stock,
+                stock: data.stock
             }
         });
         return article;
