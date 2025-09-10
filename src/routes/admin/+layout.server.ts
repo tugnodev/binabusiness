@@ -61,7 +61,9 @@ export const load: ServerLoad = async ({ request }) => {
   if (!session) {
     throw redirect(303, '/');
   }
-  const user = session.user as User;
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id }
+  }) as User;
   if (!user.vender) {
     throw redirect(303, '/');
   }
