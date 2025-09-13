@@ -19,14 +19,8 @@
                 cardDetails: JSON.stringify([])
             })
         });
-        eventBus.dispatchEvent(new CustomEvent('resetCart'));
     }
 
-    eventBus.addEventListener('resetCart', () => {
-        console.log('resetCart');
-        articleCartStore.clean();
-        orderModal = false;
-    });
 
     const deleteArticle = async (articleId: number) => {
         articleCart.update(cart => cart.filter(a => a.articleId !== articleId));
@@ -56,10 +50,10 @@
     
 </script>
 
-<div in:fly={{ x: 700 }} out:fly={{ x: 700 }} class="w-96 rounded-2xl border-2 gap-2 border-base-200 fixed z-20 top-16 p-4 right-2 flex flex-col justify-between items-center max-h-[500px] transition-all duration-300 bg-base-200/60 shadow-lg backdrop-blur-sm">
+<div in:fly={{ x: 700 }} out:fly={{ x: 700 }} class="max-w-96 w-full rounded-2xl border-2 gap-2 border-base-200 fixed z-20 top-16 p-4 right-2 flex flex-col justify-between items-center max-h-[500px] transition-all duration-300 bg-base-200/60 shadow-lg backdrop-blur-sm">
     <div class="flex justify-between items-center w-full h-full">
         <h1 class="text-lg font-Raleway font-extrabold">MON PANIER</h1>
-        <button onclick={() => resetCart()} class="btn btn-error btn-sm rounded-full">Vider</button>
+        <button onclick={() => resetCart()} disabled={$articleCart.length === 0} class="btn btn-error btn-sm rounded-full">Vider</button>
     </div>
     <div class="flex flex-col gap-2 overflow-y-auto no-scrollbar justify-start items-center w-full h-full">
         {#each $articleCart as article}
@@ -87,7 +81,7 @@
             <h2>Total : </h2>
             <h2>{$articleCart.reduce((total, article) => total + article.articlePrice * article.quantity, 0)} XOF</h2>
         </div>
-        <button onclick={() => orderModal = true} class="btn btn-primary btn-sm rounded-full">Commander</button>
+        <button disabled={$articleCart.length === 0} onclick={() => orderModal = true} class="btn btn-primary btn-sm rounded-full">Commander</button>
     </div>
 </div>
 

@@ -47,13 +47,7 @@
                 <div class="stat px-4 py-2">
                 <div class="stat-title text-sm text-secondary">Expedier</div>
                 <div class="stat-value text-xl text-accent"></div>
-                    {orders.filter((o: Order) => o.orderStatus.includes('sended')).length}</div>
-                </div>
-            <div class="stats bg-base-200/60 shadow-md">
-                <div class="stat px-4 py-2">
-                <div class="stat-title text-sm text-secondary">Recus</div>
-                <div class="stat-value text-xl text-accent"></div>
-                    {orders.filter((o: Order) => o.orderStatus.includes('receved')).length}</div>
+                    {orders.filter((o: Order) => o.orderStatus.includes('expedier')).length}</div>
                 </div>
             </div>
             </div>
@@ -96,10 +90,14 @@
                                             Quantité: {article.quantity}
                                         </div>
                                     </div>
-                                    <div class="flex flex-1 flex-wrap gap-2">
+                                    <div class="flex flex-1 items-center flex-wrap gap-2">
                                         <div class="badge overflow-hidden badge-outline">
-                                            le : {`${order.createdAt}`.replace(/GMT\+000 \(Coordinated Universal Time\)/g, '')}
+                                            {`${order.createdAt}`.replace(/GMT\+0000 \(Coordinated Universal Time\)/g, '')}
                                         </div>
+                                        <form action="?/validateOrder" method="post">
+                                            <input type="hidden" name="orderId" value={order.id} />
+                                            <button disabled={order.orderStatus.includes('expedier')} type="submit" class="btn btn-sm btn-success">Valider</button>
+                                        </form>
                                     </div>
                                 </div>
                             {/each}
