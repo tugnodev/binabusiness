@@ -1,6 +1,6 @@
 <script lang="ts">
     import Section from '$lib/client/components/Section.svelte';
-    //import { authClient } from '$lib/client/articlesClient.js';
+    import { authClient } from '$lib/client/auth.client.js';
 	import UserCard from '$lib/client/components/userCard.svelte';
 
     export let data: { user: any; };

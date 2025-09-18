@@ -21,7 +21,7 @@ class ClientAuth {
     });
 
     if(data.error){
-      throw new Error(data.error.message);
+      console.log(data.error.message);
     }else{
       goto("/market");
     }
@@ -37,7 +37,7 @@ class ClientAuth {
     });
     
     if(res.error){
-      throw new Error(res.error.message);
+      console.log(res.error.message);
     }else{
       goto("/market");
     }
@@ -53,7 +53,7 @@ class ClientAuth {
     });
 
     if(res.error){
-      throw new Error(res.error.message);
+      console.log(res.error.message);
     }else{
       goto("/market");
     }

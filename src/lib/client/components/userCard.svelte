@@ -66,10 +66,7 @@
             </div>
             <div class="flex gap-1 flex-1">
                 <button onclick={() => showModal = true} class="btn btn-primary btn-xs">Mot de passe</button>
-                <form action="?/logout" method="POST" use:enhance>
-                    <input type="hidden" name="logout" value="logout">
-                    <button type="submit" class="btn btn-error btn-xs">Deconnexion</button>
-                </form>
+                <button onclick={logout} class="btn btn-error btn-xs">Deconnexion</button>
             </div>
         </div>
     </div>
