@@ -37,9 +37,10 @@ class ClientAuth {
     });
     
     if(res.error){
-      console.log(res.error.message);
+      return {error: "email ou mot de passe incorrect"};
     }else{
       goto("/market");
+      return {success: "connexion reussie"};
     }
 
   };
@@ -53,9 +54,10 @@ class ClientAuth {
     });
 
     if(res.error){
-      console.log(res.error.message);
+      return {error: "email ou mot de passe incorrect"};
     }else{
       goto("/market");
+      return {success: "inscription reussie"};
     }
   };
 
@@ -63,17 +65,18 @@ class ClientAuth {
     const res = await this.client.signOut();
     if(res.error){
       console.log(res);
-      throw new Error(res.error.message);
+      return {error: "error pendant la deconnexion"};
     }else{
       goto('/');
+      return {success: "deconnexion reussie"};
     }
   };
 
   eMailVerify = async () => {
-    const session = await this.getSession();
+    const session = this.getSession();
     const token = session.value?.data?.session?.token as string;
     if(!token){
-      return "error pendant la verification de l'email";
+      return {error: "error pendant la verification de l'email"};
     }
     const res = await this.client.verifyEmail({
       query: {
