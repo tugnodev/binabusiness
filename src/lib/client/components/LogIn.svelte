@@ -9,6 +9,9 @@
         const res = await authClient.signIn(email, password);
         if(res.error){
             alert = true;
+            setTimeout(() => {
+                alert = false;
+            }, 3000);
             return;
         }
     }
@@ -22,13 +25,10 @@
         <button class="btn btn-secondary" type="submit">Se connecter</button>
     </form>
     {#if alert}
-        <span class="text-red-500">{alert}</span>
+        <span in:slide={{ duration: 200, delay: 100 }} out:slide={{ duration: 200, delay: 100 }} class="alert alert-error p-2 w-full">Email ou mot de passe incorrect</span>
     {/if}
     <div class="divider">OU</div>
-    <form action="?/signInSocial" method="POST" class="flex items-center justify-center gap-2 w-full">
-        <input type="hidden" name="provider" value="google" />
-        <button class="btn btn-base-100 w-full" type="submit">S'inscrire avec Google</button>
-    </form>
+    <button class="btn btn-base-100 w-full" onclick={() => authClient.signInWithGoogle()}>S'inscrire avec Google</button>
 </div>
 
 <style>

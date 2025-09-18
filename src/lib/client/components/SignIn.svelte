@@ -8,6 +8,7 @@
     let email = $state('');
     let password = $state('');
     let confirmPassword = $state('');
+    let alert = $state(false);
 
     $effect(() => {
         if(password === confirmPassword && confirmPassword !== ''){
@@ -21,10 +22,12 @@
     async function submit() {
         const res = await authClient.signUp(email, name, password);
         if(res){
-            alert("Erreur lors de l'inscription");
+            alert = true;
+            setTimeout(() => {
+                alert = false;
+            }, 3000);
             return;
         }
-        alert("Inscription reussie");
     }
 
 </script>
@@ -39,6 +42,9 @@
             <button type="submit" class="btn btn-secondary" disabled={!same}>S'inscrire</button>
         {#if password !== confirmPassword && confirmPassword !== ''}
             <span class="text-red-500">Les mots de passe ne sont pas identiques</span>
+        {/if}
+        {#if alert}
+        <span in:slide={{ duration: 200, delay: 100 }} out:slide={{ duration: 200, delay: 100 }} class="alert alert-error p-2 w-full">Email ou mot de passe incorrect</span>
         {/if}
     </form>
     <div class="divider">OU</div>
